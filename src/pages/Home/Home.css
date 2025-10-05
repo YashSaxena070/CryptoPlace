@@ -1,0 +1,145 @@
+.home{
+    padding: 0px 5px;
+    padding-bottom: 100px;
+}
+
+@media (min-width: 768px) {
+    .home {
+        padding: 0px 10px;
+    }
+}
+
+.hero{
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin: 40px auto;
+    gap: 20px;
+    padding: 0 10px;
+}
+
+@media (min-width: 768px) {
+    .hero {
+        margin: 80px auto;
+        gap: 30px;
+    }
+}
+
+.hero h1{
+    font-size: max(6vw, 28px);
+}
+
+@media (min-width: 768px) {
+    .hero h1 {
+        font-size: max(4vw, 36px);
+    }
+}
+
+.hero p{
+    width: 90%;
+    color: #e3e3e3;
+    line-height: 1.5;
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    .hero p {
+        width: 75%;
+        font-size: 16px;
+    }
+}
+
+.hero form{
+    padding: 6px;
+    width: 90%;
+    background-color: white;
+    border-radius: 5px;
+    font-size: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+}
+
+@media (min-width: 768px) {
+    .hero form {
+        padding: 8px;
+        width: 80%;
+        font-size: 20px;
+        gap: 10px;
+    }
+}
+
+.hero input{
+    flex: 1;
+    font-size: 14px;
+    outline: none;
+    border: none;
+    padding-left: 8px;
+}
+
+@media (min-width: 768px) {
+    .hero input {
+        font-size: 16px;
+        padding-left: 10px;
+    }
+}
+
+.hero button{
+    border: none;
+    background: #7927ff;
+    color: white;
+    font-size: 14px;
+    padding: 8px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+@media (min-width: 768px) {
+    .hero button {
+        font-size: 16px;
+        padding: 10px 30px;
+    }
+}
+
+.crypto-table{
+    max-width: 800px;
+    margin: auto;
+    border-radius: 15px;
+    background: linear-gradient(rgba(84,3,255,0.15),rgba(105,2,153,0.15));
+    overflow-x: auto;
+}
+
+.table-layout{
+    display: grid;
+    grid-template-columns: 0.5fr 2fr 1fr 1fr 1.5fr;
+    padding: 15px 20px;
+    align-items: center;
+    border-bottom: 1px solid #3c3c3c;
+    cursor: pointer;
+    min-width: 600px;
+}
+
+@media (max-width: 767px) {
+    .table-layout {
+        grid-template-columns: 0.3fr 1.5fr 1fr 1fr 1fr;
+        padding: 12px 15px;
+        font-size: 14px;
+    }
+    
+    .table-layout p {
+        font-size: 12px;
+    }
+    
+    .table-layout img {
+        width: 16px !important;
+        height: 16px !important;
+        margin-right: 6px !important;
+    }
+}
+
+.market-cap{
+    text-align: right;  
+}

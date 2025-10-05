@@ -1,0 +1,149 @@
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 5%;
+    color: #ddd;
+    border-bottom: 2px solid #3c3c3c;
+    position: relative;
+}
+
+@media (min-width: 768px) {
+    .navbar {
+        padding: 20px 10%;
+    }
+}
+
+.logo-container .logo{
+    width: max(8vw, 80px);
+    cursor: pointer;
+}
+
+@media (min-width: 768px) {
+    .logo-container .logo {
+        width: max(12vw, 120px);
+    }
+}
+
+.nav-menu{
+    display: flex;
+    list-style: none;
+    gap: 40px;
+}
+
+.navbar li{
+    cursor: pointer;
+}
+
+/* Mobile menu button */
+.mobile-menu-btn {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 30px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 10;
+}
+
+.mobile-menu-btn span {
+    width: 25px;
+    height: 3px;
+    background: white;
+    border-radius: 3px;
+    transition: all 0.3s linear;
+    position: relative;
+    transform-origin: 1px;
+}
+
+.mobile-menu-btn.active span:first-child {
+    transform: rotate(45deg);
+}
+
+.mobile-menu-btn.active span:nth-child(2) {
+    opacity: 0;
+    transform: translateX(20px);
+}
+
+.mobile-menu-btn.active span:nth-child(3) {
+    transform: rotate(-45deg);
+}
+
+@media (min-width: 768px) {
+    .mobile-menu-btn {
+        display: none;
+    }
+}
+
+@media (max-width: 767px) {
+    .nav-menu {
+        position: fixed;
+        left: -100%;
+        top: 70px;
+        flex-direction: column;
+        background-color: rgba(11, 0, 78, 0.95);
+        width: 100%;
+        text-align: center;
+        transition: 0.3s;
+        box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
+        padding: 20px 0;
+        gap: 20px;
+    }
+
+    .nav-menu-open {
+        left: 0;
+    }
+
+    .nav-right {
+        display: none;
+    }
+}
+
+.nav-right{
+    display: flex;
+    align-items: center;
+    gap: max(1vw,12px);
+}
+
+.navbar select {
+    padding: 5px 8px;
+    border-radius: 6px;
+    border: 2px solid white;
+    background: transparent;
+    color: white;
+    cursor: pointer;
+}
+
+.logo-container{
+    cursor: pointer;
+}
+
+.navbar .nav-item{
+    cursor: pointer;
+}
+.navbar option{
+    background-color: #09005c;
+    color:white;
+    border: none;
+    border-color: #09005c;
+}
+.navbar button{
+    display: flex;
+    align-items: center;
+    padding: 10px 25px;
+    gap: 10px;
+    border-radius: 20px;
+    border: none;
+    background: white;
+    color: #393939;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 15px;
+}
+
+.navbar button img{
+    width: 13px;
+}
