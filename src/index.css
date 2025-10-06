@@ -16,6 +16,17 @@ a{
   min-height: 100vh;
   color: white;
   background: linear-gradient(#0b004e, #1d152f, #002834);
+  transition: all 0.3s ease;
+}
+
+/* Light theme styles */
+.app.light {
+  color: #333;
+  background: linear-gradient(#f0f0f0, #e8e8e8, #d0d0d0);
+}
+
+.app.light * {
+  color: inherit;
 }
 
 /* Global responsive utilities */

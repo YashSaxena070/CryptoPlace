@@ -6,6 +6,13 @@
     color: #ddd;
     border-bottom: 2px solid #3c3c3c;
     position: relative;
+    transition: all 0.3s ease;
+}
+
+/* Light theme navbar styles */
+.app.light .navbar {
+    color: #333;
+    border-bottom: 2px solid #ccc;
 }
 
 @media (min-width: 768px) {
@@ -17,6 +24,8 @@
 .logo-container .logo{
     width: max(8vw, 80px);
     cursor: pointer;
+    background-color: #09005c;
+    border-radius: 20px;
 }
 
 @media (min-width: 768px) {
@@ -115,6 +124,13 @@
     background: transparent;
     color: white;
     cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* Light theme select styles */
+.app.light .navbar select {
+    border: 2px solid #333;
+    color: #333;
 }
 
 .logo-container{
@@ -130,6 +146,13 @@
     border: none;
     border-color: #09005c;
 }
+
+/* Light theme option styles */
+.app.light .navbar option{
+    background-color: #f0f0f0;
+    color: #333;
+    border-color: #f0f0f0;
+}
 .navbar button{
     display: flex;
     align-items: center;
@@ -142,8 +165,51 @@
     cursor: pointer;
     font-weight: 500;
     font-size: 15px;
+    transition: all 0.3s ease;
+}
+
+/* Light theme button styles */
+.app.light .navbar button {
+    background: #333;
+    color: white;
 }
 
 .navbar button img{
     width: 13px;
+}
+
+/* Theme toggle button styles */
+.theme-toggle-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 12px;
+    border-radius: 50%;
+    border: 2px solid white;
+    background: transparent;
+    color: white;
+    cursor: pointer;
+    font-size: 18px;
+    transition: all 0.3s ease;
+    width: 40px;
+    height: 40px;
+}
+
+.theme-toggle-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: scale(1.1);
+}
+
+.theme-toggle-btn:active {
+    transform: scale(0.95);
+}
+
+/* Light theme toggle button styles */
+.app.light .theme-toggle-btn {
+    border: 2px solid #333;
+    color: #333;
+}
+
+.app.light .theme-toggle-btn:hover {
+    background: rgba(0, 0, 0, 0.1);
 }

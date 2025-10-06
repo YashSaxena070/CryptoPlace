@@ -44,6 +44,11 @@
     font-size: 14px;
 }
 
+/* Light theme hero styles */
+.app.light .hero p{
+    color: #666;
+}
+
 @media (min-width: 768px) {
     .hero p {
         width: 75%;
@@ -120,6 +125,12 @@
     border-bottom: 1px solid #3c3c3c;
     cursor: pointer;
     min-width: 600px;
+    transition: all 0.3s ease;
+}
+
+/* Light theme table styles */
+.app.light .table-layout{
+    border-bottom: 1px solid #ddd;
 }
 
 @media (max-width: 767px) {

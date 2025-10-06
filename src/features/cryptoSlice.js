@@ -28,12 +28,14 @@ const cryptoSlice = createSlice({
         status: "idle", // idle, loading, succeeded, failed
         error: null,
         currency: { name: "usd", symbol: "$" },
+        theme: 'dark',
     },
     reducers: {
         setCurrency: (state, action) => {
             state.currency = action.payload;
             state.status = 'idle'; // Reset status to trigger refetch
         },
+        setTheme: (state) =>{ state.theme = state.theme == 'dark'? 'light': 'dark';}
     },
     extraReducers: (builder) => {
         builder
@@ -52,5 +54,5 @@ const cryptoSlice = createSlice({
     },
 });
 
-export const { setCurrency } = cryptoSlice.actions;
+export const { setCurrency, setTheme } = cryptoSlice.actions;
 export default cryptoSlice.reducer;

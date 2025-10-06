@@ -3,7 +3,7 @@ import './Navbar.css'
 import logo from '../../assets/logo.png'
 import arrow_icon from '../../assets/arrow_icon.png' 
 import { useDispatch , useSelector} from 'react-redux'
-import { setCurrency } from '../../features/cryptoSlice'
+import { setCurrency, setTheme } from '../../features/cryptoSlice'
 import { useNavigate } from 'react-router-dom'
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -11,6 +11,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const {currency} = useSelector((state) => state.crypto);
+  const {theme} = useSelector((state) => state.crypto)
 
   const handleCurrencyChange = (e) => {
     const value = e.target.value;
@@ -23,6 +24,10 @@ const Navbar = () => {
     else if(value == "inr"){
       dispatch(setCurrency({name:"inr", symbol:"₹"}));
     }
+  }
+
+  const handleThemeToggle = () => {
+    dispatch(setTheme());
   }
 
   return (
@@ -49,6 +54,9 @@ const Navbar = () => {
       </ul>
       
       <div className="nav-right">
+        <button className="theme-toggle-btn" onClick={handleThemeToggle}>
+          {theme === 'dark' ? '☀️' : '🌙'}
+        </button>
         <select value={currency.name} onChange={handleCurrencyChange}>
             <option value="usd">USD</option>
             <option value="eur">EURO</option>
