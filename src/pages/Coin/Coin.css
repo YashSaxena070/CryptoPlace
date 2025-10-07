@@ -131,3 +131,41 @@
 .app.light .coin-details p:last-child {
     color: #333;
 }
+
+/* Watchlist section in coin page */
+.in-watchlist {
+    position: absolute;
+    top: 120px;
+    right: 20px;
+    z-index: 10;
+}
+
+@media (min-width: 768px) {
+    .in-watchlist {
+        top: 150px;
+        right: 100px;
+    }
+}
+
+.in-watchlist .star-icon {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    padding: 10px;
+    border-radius: 50%;
+    backdrop-filter: blur(10px);
+}
+
+.in-watchlist .star-icon:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+}
+
+/* Light theme watchlist section */
+.app.light .in-watchlist .star-icon {
+    background: rgba(0, 0, 0, 0.1);
+    border: 2px solid rgba(0, 0, 0, 0.3);
+}
+
+.app.light .in-watchlist .star-icon:hover {
+    background: rgba(0, 0, 0, 0.2);
+}

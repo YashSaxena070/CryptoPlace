@@ -1,19 +1,29 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Navbar from './components/Navabr/Navbar'
 import { Route,Routes } from 'react-router-dom'
 import Home from './pages/Home/Home'
 import Coin from './pages/Coin/Coin'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { initializeWatchlist } from './features/cryptoSlice'
+import Signup from './pages/SignUp/Signup'
 
 const App = () => {
   const { theme } = useSelector((state) => state.crypto);
+  const dispatch = useDispatch();
   
+  useEffect(() => {
+    dispatch(initializeWatchlist());
+  }, [dispatch]);
+  
+ const hideNavbar = location.pathname === '/signup';
+
   return (
     <div className={`app ${theme}`}>
-      <Navbar/>
+      { !hideNavbar && <Navbar/>}
       <Routes>
         <Route path='/' element={<Home/>}/>
         <Route path='/coin/:coinId' element={<Coin/>}/>
+        <Route path='/signup' element={<Signup/>}/>
       </Routes>
     </div>
   )

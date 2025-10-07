@@ -119,7 +119,7 @@
 
 .table-layout{
     display: grid;
-    grid-template-columns: 0.5fr 2fr 1fr 1fr 1.5fr;
+    grid-template-columns: 0.5fr 2fr 1fr 1fr 1.5fr 0.3fr;
     padding: 15px 20px;
     align-items: center;
     border-bottom: 1px solid #3c3c3c;
@@ -135,7 +135,7 @@
 
 @media (max-width: 767px) {
     .table-layout {
-        grid-template-columns: 0.3fr 1.5fr 1fr 1fr 1fr;
+        grid-template-columns: 0.3fr 1.5fr 1fr 1fr 1fr 0.3fr;
         padding: 12px 15px;
         font-size: 14px;
     }
@@ -153,4 +153,101 @@
 
 .market-cap{
     text-align: right;  
+}
+
+/* Filter buttons */
+.filtering {
+    display: flex;
+    gap: 15px;
+    padding: 20px;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.filtering button {
+    padding: 10px 20px;
+    border: 2px solid #3c3c3c;
+    background: transparent;
+    color: #ddd;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.filtering button:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: #555;
+}
+
+.filtering button.active {
+    background: #7927ff;
+    border-color: #7927ff;
+    color: white;
+}
+
+/* Light theme filtering buttons */
+.app.light .filtering button {
+    border: 2px solid #ccc;
+    color: #333;
+}
+
+.app.light .filtering button:hover {
+    background: rgba(0, 0, 0, 0.1);
+    border-color: #999;
+}
+
+.app.light .filtering button.active {
+    background: #7927ff;
+    border-color: #7927ff;
+    color: white;
+}
+
+/* Star icon styles */
+.star-icon {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 10;
+}
+
+.star-icon.empty {
+    color: #666;
+}
+
+.star-icon.filled {
+    color: #ffd700;
+}
+
+.star-icon:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: scale(1.2);
+}
+
+/* Light theme star icon */
+.app.light .star-icon.empty {
+    color: #999;
+}
+
+.app.light .star-icon:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+/* Table layout adjustments for star icon */
+.table-layout {
+    position: relative;
+}
+
+.table-layout .star-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
 }

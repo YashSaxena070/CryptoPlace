@@ -30,6 +30,7 @@ const Navbar = () => {
     dispatch(setTheme());
   }
 
+
   return (
     <div className='navbar'>
       <div className="logo-container">
@@ -62,7 +63,7 @@ const Navbar = () => {
             <option value="eur">EURO</option>
             <option value="inr">INR</option>
         </select>
-        <button>Sign up <img src={arrow_icon} alt="" /></button>
+        <button onClick= {()=> navigate("/signup")}>Sign up <img src={arrow_icon} alt="" /></button>
       </div>
     </div>
   )

@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from "react";
 import "./Coin.css";
 import { useNavigate, useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import LineChart from "../../components/LineChart/LineChart";
+import { StarIcon } from "../StarIcon";
+import { toggleWatchlist } from "../../features/cryptoSlice";
 const Coin = () => {
+  const dispatch = useDispatch();
   const { coinId } = useParams();
   const [coinData, setCoinData] = useState(null);
   const [loading, setLoading] = useState(false);
-  const { currency } = useSelector((state) => state.crypto);
+  const { currency, watchlist } = useSelector((state) => state.crypto);
   const [error, setError] = useState(null);
   const [historicalData, setHistoricalData] = useState();
+  const isWatched = watchlist.includes(coinId);
 
   const navigate = useNavigate();
 
@@ -76,6 +80,9 @@ const Coin = () => {
           className="coin-image"
         />
         <p>{coinData.name}</p>
+      </div>
+      <div className="in-watchlist">
+        <StarIcon isFilled={isWatched} onClick={()=> dispatch(toggleWatchlist(coinId))} />
       </div>
       <div className="coin-chart">
         {historicalData ? (

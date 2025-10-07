@@ -20,6 +20,7 @@ export const fetchCrypto = createAsyncThunk(
     }
 );
 
+
 // 2. Crypto Slice
 const cryptoSlice = createSlice({
     name: "crypto",
@@ -29,13 +30,35 @@ const cryptoSlice = createSlice({
         error: null,
         currency: { name: "usd", symbol: "$" },
         theme: 'dark',
+        watchlist: []
     },
     reducers: {
         setCurrency: (state, action) => {
             state.currency = action.payload;
             state.status = 'idle'; // Reset status to trigger refetch
         },
-        setTheme: (state) =>{ state.theme = state.theme == 'dark'? 'light': 'dark';}
+        setTheme: (state) =>{ state.theme = state.theme == 'dark'? 'light': 'dark';},
+        toggleWatchlist: (state, action) => {
+            const coinId = action.payload;
+            const index = state.watchlist.indexOf(coinId);
+            if(index>=0){
+                state.watchlist.splice(index, 1);
+            }
+            else{
+                state.watchlist.push(coinId);
+            }
+            // Save to localStorage
+            localStorage.setItem('cryptoWatchlist', JSON.stringify(state.watchlist));
+        },
+        setWatchlistFromStorage: (state, action)=> {
+            state.watchlist = action.payload;
+        },
+        initializeWatchlist: (state) => {
+            const savedWatchlist = localStorage.getItem('cryptoWatchlist');
+            if (savedWatchlist) {
+                state.watchlist = JSON.parse(savedWatchlist);
+            }
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -54,5 +77,5 @@ const cryptoSlice = createSlice({
     },
 });
 
-export const { setCurrency, setTheme } = cryptoSlice.actions;
+export const { setCurrency, setTheme, setWatchlistFromStorage, toggleWatchlist, initializeWatchlist } = cryptoSlice.actions;
 export default cryptoSlice.reducer;
