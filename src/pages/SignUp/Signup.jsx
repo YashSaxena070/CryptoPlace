@@ -1,76 +1,88 @@
-import React, { useState } from 'react';
-import './signup.css'
+import React, { useState, useRef } from 'react';
+import './Signup.css'
 import { useNavigate } from 'react-router-dom';
-
+import { createUserWithEmailAndPassword, updateProfile, signInWithEmailAndPassword } from 'firebase/auth';
+import { useDispatch } from 'react-redux';
+import { checkValidData } from '../../features/validate';
+import { auth } from '../../firebase';
+import { login } from '../../features/userSlice';
 const Signup = () => {
+  const dispatch = useDispatch();
+  const [isSignIn, setIsSignIn] = useState(true);
+
+  const toggleSignin = () => {
+    setIsSignIn(!isSignIn);
+  };
   
   const navigate = useNavigate();
 
-  const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    password: ''
-  });
-  const [errors, setErrors] = useState({});
+  const email = useRef(null);
+  const password = useRef(null);
+  const name = useRef(null);
+  const confirmPassword = useRef(null);
+
+  const handleButtonClick = (e) => {
+      const message = checkValidData(email.current.value, password.current.value);
+      setErrorMessage(message);
+
+      if (message) return;
+
+      //signin/ sign up logic
+      if(!isSignIn){
+          //signup logic
+          if(confirmPassword.current.value!=password.current.value){
+            setErrorMessage("Password mismatch, Try again!")
+            return
+          }
+
+          createUserWithEmailAndPassword(
+            auth,
+            email.current.value,
+            password.current.value
+          )
+          .then((userCredential) =>{
+            //signed up
+            updateProfile(auth.currentUser, {
+              displayName: name.current.value,
+
+            })
+              .then(() => {
+                const {uid, email, displayName} = auth.currentUser;
+                dispatch(login({ uid, email, displayName }));
+                setSuccess(true);
+                navigate('/');
+              })
+              .catch((error) => {
+                setErrorMessage(error.message);
+              });
+          })
+          .catch((error)=>{
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            setErrorMessage(errorCode+ "-" +errorMessage);
+          });
+      }else{
+        //signin
+        signInWithEmailAndPassword(
+          auth,
+          email.current.value,
+          password.current.value
+        )
+         .then((userCredential) =>{
+          //signed in
+          const {uid, email, displayName} = userCredential.user;
+          dispatch(login({ uid, email, displayName }));
+          navigate('/');
+         })
+         .catch((error)=>{
+          setErrorMessage("User not found");
+         })
+      }
+  }
+
+  const [errorMessage, setErrorMessage] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-    // Clear error for this field on change
-    if (errors[name]) {
-      setErrors(prev => ({
-        ...prev,
-        [name]: ''
-      }));
-    }
-  };
-
-  const validateForm = () => {
-    const newErrors = {};
-
-    // Username validation
-    if (!formData.username.trim()) {
-      newErrors.username = 'Username is required.';
-    }
-
-    // Email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!formData.email.trim()) {
-      newErrors.email = 'Email is required.';
-    } else if (!emailRegex.test(formData.email)) {
-      newErrors.email = 'Please enter a valid email.';
-    }
-
-    // Password validation
-    if (!formData.password) {
-      newErrors.password = 'Password is required.';
-    } else if (formData.password.length < 6) {
-      newErrors.password = 'Password must be at least 6 characters.';
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!validateForm()) return;
-
-    setIsSubmitting(true);
-    // Simulate API call (replace with real backend integration)
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    setSuccess(true);
-    setIsSubmitting(false);
-    // Reset form on success (optional)
-    // setFormData({ username: '', email: '', password: '' });
-  };
- 
-  
 
   return (
     <div style={{
@@ -94,7 +106,7 @@ const Signup = () => {
         maxWidth: '400px'
       }}>
         <h2 style={{ textAlign: 'center', color: '#333', marginBottom: '1.5rem' }}>
-          Create Your Account
+          {isSignIn? 'Sign In' : 'Create your Account'}
         </h2>
         
         {success && (
@@ -111,34 +123,26 @@ const Signup = () => {
           </div>
         )}
 
-        <form onSubmit={handleSubmit}>
-          <div style={{ marginBottom: '1rem' }}>
-            <label htmlFor="username" style={{ display: 'block', marginBottom: '0.5rem', color: '#555' }}>
-              Username
-            </label>
-            <input
-              type="text"
-              id="username"
-              name="username"
-              value={formData.username}
-              onChange={handleChange}
-              style={{
-                width: '100%',
-                padding: '0.75rem',
-                border: errors.username ? '1px solid #dc3545' : '1px solid #ddd',
-                borderRadius: '4px',
-                boxSizing: 'border-box',
-                fontSize: '1rem'
-              }}
-              required
-            />
-            {errors.username && (
-              <div style={{ color: '#dc3545', fontSize: '0.875rem', marginTop: '0.25rem' }}>
-                {errors.username}
-              </div>
-            )}
-          </div>
-
+        <form onSubmit={(e) =>{
+          e.preventDefault();
+        }}>
+          <h1 className="font-bold py-4 text-3xl text-white">
+          {isSignIn ? "Sign In" : "Sign Up"}
+          </h1>
+          {!isSignIn && (
+            <input 
+            ref={name}
+            placeholder='Full Name'
+            style={{
+              width: '100%',
+              padding: '0.75rem',
+              border: '1px solid #ddd',
+              borderRadius: '4px',
+              boxSizing: 'border-box',
+              fontSize: '1rem'
+            }}
+            type="text" />
+          )}
           <div style={{ marginBottom: '1rem' }}>
             <label htmlFor="email" style={{ display: 'block', marginBottom: '0.5rem', color: '#555' }}>
               Email
@@ -146,24 +150,17 @@ const Signup = () => {
             <input
               type="email"
               id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
+              ref={email}
               style={{
                 width: '100%',
                 padding: '0.75rem',
-                border: errors.email ? '1px solid #dc3545' : '1px solid #ddd',
+                border: '1px solid #ddd',
                 borderRadius: '4px',
                 boxSizing: 'border-box',
                 fontSize: '1rem'
               }}
               required
             />
-            {errors.email && (
-              <div style={{ color: '#dc3545', fontSize: '0.875rem', marginTop: '0.25rem' }}>
-                {errors.email}
-              </div>
-            )}
           </div>
 
           <div style={{ marginBottom: '1.5rem' }}>
@@ -174,12 +171,11 @@ const Signup = () => {
               type="password"
               id="password"
               name="password"
-              value={formData.password}
-              onChange={handleChange}
+              ref={password}
               style={{
                 width: '100%',
                 padding: '0.75rem',
-                border: errors.password ? '1px solid #dc3545' : '1px solid #ddd',
+                border: '1px solid #ddd',
                 borderRadius: '4px',
                 boxSizing: 'border-box',
                 fontSize: '1rem'
@@ -187,16 +183,28 @@ const Signup = () => {
               minLength={6}
               required
             />
-            {errors.password && (
-              <div style={{ color: '#dc3545', fontSize: '0.875rem', marginTop: '0.25rem' }}>
-                {errors.password}
-              </div>
+            {!isSignIn && (
+             <input
+            ref={confirmPassword}
+            type="password"
+            placeholder="Confirm Password"
+            style={{
+              width: '100%',
+              padding: '0.75rem',
+              border: '1px solid #ddd',
+              borderRadius: '4px',
+              boxSizing: 'border-box',
+              fontSize: '1rem'
+            }}
+            className="bg-gray-400/70 p-3 my-2 rounded w-full focus:bg-white"
+            />
             )}
           </div>
 
           <button
             type="submit"
             disabled={isSubmitting}
+            onClick={handleButtonClick}
             style={{
               width: '100%',
               padding: '0.75rem',
@@ -209,8 +217,18 @@ const Signup = () => {
               transition: 'background-color 0.2s'
             }}
           >
-            {isSubmitting ? 'Creating Account...' : 'Sign Up'}
+            {isSignIn ? 'Sign In' : 'Sign Up'}
           </button>
+          {errorMessage && (
+            <div style={{ color: '#dc3545', fontSize: '0.9rem', marginTop: '0.75rem', textAlign: 'center' }}>
+              {errorMessage}
+            </div>
+          )}
+          <div style={{ textAlign: 'center', marginTop: '1rem' }}>
+            <button type="button" onClick={toggleSignin} style={{ background: 'none', border: 'none', color: '#007bff', cursor: 'pointer' }}>
+              {isSignIn ? 'New to CryptoPlace? Create an account' : 'Already have an account? Sign in'}
+            </button>
+          </div>
         </form>
 
         {success && (
