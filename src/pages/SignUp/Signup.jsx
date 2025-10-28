@@ -22,17 +22,18 @@ const Signup = () => {
   const confirmPassword = useRef(null);
 
   const handleButtonClick = (e) => {
-      const message = checkValidData(email.current.value, password.current.value);
-      setErrorMessage(message);
-
-      if (message) return;
-
       //signin/ sign up logic
       if(!isSignIn){
-          //signup logic
+          //signup logic - validate data first
+          const message = checkValidData(email.current.value, password.current.value);
+          if (message) {
+            setErrorMessage(message);
+            return;
+          }
+
           if(confirmPassword.current.value!=password.current.value){
-            setErrorMessage("Password mismatch, Try again!")
-            return
+            setErrorMessage("Password mismatch, Try again!");
+            return;
           }
 
           createUserWithEmailAndPassword(
@@ -75,7 +76,15 @@ const Signup = () => {
           navigate('/');
          })
          .catch((error)=>{
-          setErrorMessage("User not found");
+          if (error.code === 'auth/wrong-password') {
+            setErrorMessage("Wrong password");
+          } else if (error.code === 'auth/user-not-found') {
+            setErrorMessage("User not found");
+          } else if (error.code === 'auth/invalid-email') {
+            setErrorMessage("Invalid email");
+          } else {
+            setErrorMessage("User not found");
+          }
          })
       }
   }
@@ -83,6 +92,35 @@ const Signup = () => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
+
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    // Username validation
+    if (!formData.username.trim()) {
+      newErrors.username = 'Username is required.';
+    }
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email is required.';
+    } else if (!emailRegex.test(formData.email)) {
+      newErrors.email = 'Please enter a valid email.';
+    }
+
+    // Password validation
+    if (!formData.password) {
+      newErrors.password = 'Password is required.';
+    } else if (formData.password.length < 6) {
+      newErrors.password = 'Password must be at least 6 characters.';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+  
 
   return (
     <div style={{

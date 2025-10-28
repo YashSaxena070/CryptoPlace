@@ -47,17 +47,12 @@ const cryptoSlice = createSlice({
             else{
                 state.watchlist.push(coinId);
             }
-            // Save to localStorage
-            localStorage.setItem('cryptoWatchlist', JSON.stringify(state.watchlist));
         },
         setWatchlistFromStorage: (state, action)=> {
             state.watchlist = action.payload;
         },
-        initializeWatchlist: (state) => {
-            const savedWatchlist = localStorage.getItem('cryptoWatchlist');
-            if (savedWatchlist) {
-                state.watchlist = JSON.parse(savedWatchlist);
-            }
+        clearWatchlist: (state) => {
+            state.watchlist = [];
         }
     },
     extraReducers: (builder) => {
@@ -77,5 +72,5 @@ const cryptoSlice = createSlice({
     },
 });
 
-export const { setCurrency, setTheme, setWatchlistFromStorage, toggleWatchlist, initializeWatchlist } = cryptoSlice.actions;
+export const { setCurrency, setTheme, setWatchlistFromStorage, toggleWatchlist, clearWatchlist } = cryptoSlice.actions;
 export default cryptoSlice.reducer;

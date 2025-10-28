@@ -3,9 +3,21 @@
     padding-bottom: 100px;
 }
 
+.home.with-chatbot {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
 @media (min-width: 768px) {
     .home {
         padding: 0px 10px;
+    }
+    
+    .home.with-chatbot {
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 20px;
     }
 }
 
@@ -250,4 +262,39 @@
     align-items: center;
     justify-content: center;
     margin: 0 auto;
+}
+
+/* Home main content wrapper */
+.home-main-content {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* When chatbot is present */
+.home.with-chatbot .home-main-content {
+    flex: 1;
+    max-width: 100%;
+}
+
+@media (min-width: 768px) {
+    .home.with-chatbot .home-main-content {
+        flex: 1;
+        max-width: calc(70% - 10px);
+    }
+}
+
+/* Chatbot wrapper */
+.chatBot {
+    width: 100%;
+    padding: 0;
+}
+
+@media (min-width: 768px) {
+    .chatBot {
+        width: calc(30% - 10px);
+        min-width: 300px;
+        position: sticky;
+        top: 20px;
+    }
 }

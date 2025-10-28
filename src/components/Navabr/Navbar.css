@@ -213,3 +213,125 @@
 .app.light .theme-toggle-btn:hover {
     background: rgba(0, 0, 0, 0.1);
 }
+
+/* User Profile Styles */
+.user-profile {
+    position: relative;
+}
+
+.profile-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 15px;
+    border-radius: 20px;
+    border: 2px solid white;
+    background: transparent;
+    color: white;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    min-width: 120px;
+}
+
+.profile-button:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-1px);
+}
+
+.profile-icon {
+    font-size: 18px;
+}
+
+.username {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100px;
+}
+
+/* Light theme profile button styles */
+.app.light .profile-button {
+    border: 2px solid #333;
+    color: #333;
+}
+
+.app.light .profile-button:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+/* Profile Dropdown Styles */
+.profile-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: rgba(11, 0, 78, 0.95);
+    border: 2px solid white;
+    border-radius: 12px;
+    padding: 10px 0;
+    min-width: 200px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+    margin-top: 8px;
+}
+
+/* Light theme dropdown styles */
+.app.light .profile-dropdown {
+    background: rgba(240, 240, 240, 0.95);
+    border: 2px solid #333;
+    color: #333;
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 14px;
+}
+
+.app.light .dropdown-item {
+    color: #333;
+}
+
+.dropdown-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.app.light .dropdown-item:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-item.logout:hover {
+    background: rgba(220, 53, 69, 0.2);
+}
+
+.app.light .dropdown-item.logout:hover {
+    background: rgba(220, 53, 69, 0.3);
+}
+
+.dropdown-divider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.2);
+    margin: 8px 0;
+}
+
+.app.light .dropdown-divider {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.email-icon, .logout-icon {
+    font-size: 16px;
+}
+
+/* Mobile responsive profile styles */
+@media (max-width: 767px) {
+    .user-profile {
+        display: none;
+    }
+}
